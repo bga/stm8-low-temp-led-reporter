@@ -577,14 +577,14 @@ void AWU_init() {
 		AWU_TBR = B1110;
 		//# TODO use only mul and shift. Try to use FU16 instead FU32
 		//# TODO fix extra 2
-		AWU_APR = (FU32(AWU_period_s) * AWU_freq_hz) / (5LU * (1 << 11)) / 2 /* non documented divider */;;
+		AWU_APR = (FU32(AWU_period_s) * AWU_freq_hz) / (5LU * (1 << 11));
 	}
 	else /* 6 - 30s */ {
 		FU8 AWU_period_s = Math_min(settings.AWU_period_s, 30);
 
 		AWU_TBR = B1111;
 		//# TODO use only mul and shift. Try to use FU16 instead FU32
-		AWU_APR = (FU32(AWU_period_s) * AWU_freq_hz) / (30LU * (1 << 11)) / 2 /* non documented divider */;
+		AWU_APR = (FU32(AWU_period_s) * AWU_freq_hz) / (30LU * (1 << 11));
 	}
 	setBit_noBV(AWU_CSR, _BV(AWU_CSR_AWUEN));
 
