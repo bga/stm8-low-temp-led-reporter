@@ -240,10 +240,8 @@ struct Pin_AdcWithEnable {
 	}
 };
 
-Pin_PushPullHiZ<PC_BASE_ADDRESS, 7> tempHeaterVccPin;
-Pin_AdcWithEnable<PD_BASE_ADDRESS, 2, 3> tempHeaterAdcPin;
-Pin_PushPullHiZ<PC_BASE_ADDRESS, 6> tempAmbientVccPin;
-Pin_AdcWithEnable<PD_BASE_ADDRESS, 2, 3> tempAmbientAdcPin;
+Pin_PushPullHiZ<PC_BASE_ADDRESS, 7> tempDividerVccPin;
+Pin_AdcWithEnable<PD_BASE_ADDRESS, 2, 3> tempDividerAdcPin;
 Pin_PushPull<PC_BASE_ADDRESS, 5> batteryVccPin;
 Pin_AdcWithEnable<PC_BASE_ADDRESS, 4, 2> batteryAdcPin;
 Pin_PushPull<PA_BASE_ADDRESS, 2> statusLedPin;
@@ -254,24 +252,23 @@ typedef U16 U1_15;
 typedef U16 U3_13;
 
 struct Settings {
-	U1_15 rHeaterToRAmbientMultiplier;
-	U3_13 tempHysteresisLow;
-	U3_13 tempHysteresisHigh;
+	U1_15 tempDividerMultipier;
+	U16 tempHysteresisLow;
+	U16 tempHysteresisHigh;
 	U16 vcc_ref_mV;
 	U16 vccAdcLow_mV;
-	U16 tempHeater_rL_ohm;
+	U16 UNIQUE_NAME; //# for backward compatibility
 	U16 statusLedBlinkShortDelay_ms;
 	U16 statusLedBlinkLongDelay_ms;
 	U8 AWU_period_s;
 };
 
 EEMEM const Settings defaultSettings = {
-	.rHeaterToRAmbientMultiplier = U1_15(1 * (1 << 15)),
-	.tempHysteresisLow = U3_13(1.1 * (1 << 13)),
-	.tempHysteresisHigh = U3_13(0.9 * (1 << 13)),
+	.tempDividerMultipier = U1_15(1 * (1 << 15)),
+	.tempHysteresisLow = U3_13(1.1 * (Adc_maxValue / 2)),
+	.tempHysteresisHigh = U3_13(0.9 * (Adc_maxValue / 2)),
 	.vcc_ref_mV = 2500,
 	.vccAdcLow_mV = 3200,
-	.tempHeater_rL_ohm = 10000,
 	.statusLedBlinkShortDelay_ms = 150,
 	.statusLedBlinkLongDelay_ms = 500,
 	.AWU_period_s = 5,
@@ -279,8 +276,7 @@ EEMEM const Settings defaultSettings = {
 Settings const& settings = ((Settings*)(&defaultSettings))[0];
 
 RunningAvg<FU16[adcMaxBufferSize], FU32> vccRunningAvg;
-RunningAvg<FU16[adcMaxBufferSize], FU32> TempHeater_runningAvg;
-RunningAvg<FU16[adcMaxBufferSize], FU32> TempAmbient_runningAvg;
+RunningAvg<FU16[adcMaxBufferSize], FU32> TempDivider_runningAvg;
 
 enum {
 	ticksCountPerSAprox = 1000UL,
@@ -464,13 +460,9 @@ void timerThread() {
 	vccRunningAvg.add(batteryAdcPin.readSync());
 	batteryVccPin.off();
 
-	tempHeaterVccPin.on(); tempAmbientVccPin.hiZ();
-	Adc_checkWrongValue((temp = tempHeaterAdcPin.readSync())) ? TempHeater_runningAvg.add(temp), 1 : (isHwError = true);
-
-	tempHeaterVccPin.hiZ(); tempAmbientVccPin.on();
-	Adc_checkWrongValue((temp = tempAmbientAdcPin.readSync())) ? TempAmbient_runningAvg.add(temp), 1 : (isHwError = true);
-
-	tempHeaterVccPin.off(); tempAmbientVccPin.off();
+	tempDividerVccPin.on();
+	Adc_checkWrongValue((temp = tempDividerAdcPin.readSync())) ? TempDivider_runningAvg.add(temp), 1 : (isHwError = true);
+	tempDividerVccPin.off();
 
 	reporter.clearStatus();
 
@@ -490,21 +482,20 @@ void timerThread() {
 	#endif // 1
 
 	#if 1
-	FU16 rHeater = rrToRh(TempHeater_runningAvg.computeAvg(), settings.tempHeater_rL_ohm);
-	FU16 rAmbient = ((FU32(settings.rHeaterToRAmbientMultiplier) * rrToRh(TempAmbient_runningAvg.computeAvg(), settings.tempHeater_rL_ohm)) >> 15);
+	FU16 rDivider = ((FU32(TempDivider_runningAvg.computeAvg()) * settings.tempDividerMultipier) >> 15);
 
-	FU16 rHeaterLowThr = ((FU32(rAmbient) * settings.tempHysteresisLow) >> 13);
-	FU16 rHeaterHighThr = ((FU32(rAmbient) * settings.tempHysteresisHigh) >> 13);
+	FU16 rDividerLowThr = settings.tempHysteresisLow;
+	FU16 rDividerHighThr = settings.tempHysteresisHigh;
 	Bool isInvert = 1;
-	if(rHeaterHighThr < rHeaterLowThr) {
-		swap(rHeaterHighThr, rHeaterLowThr);
+	if(rDividerHighThr < rDividerLowThr) {
+		swap(rDividerHighThr, rDividerLowThr);
 		isInvert = 0;
 	};
 
-	if(rHeaterHighThr < rHeater && !Temp_isLow) {
+	if(rDividerHighThr < rDivider && !Temp_isLow) {
 		Temp_isLow = 1;
 	};
-	if(rHeater < rHeaterLowThr && Temp_isLow) {
+	if(rDivider < rDividerLowThr && Temp_isLow) {
 		Temp_isLow = 0;
 	};
 	if(Temp_isLow ^ isInvert) {
@@ -653,10 +644,8 @@ void main() {
 
 //	Clock_switchToLSI();
 
-	tempHeaterVccPin.init();
-	tempHeaterAdcPin.init();
-	tempAmbientVccPin.init();
-	tempAmbientAdcPin.init();
+	tempDividerVccPin.init();
+	tempDividerAdcPin.init();
 	batteryVccPin.init();
 	batteryAdcPin.init();
 	statusLedPin.init();
