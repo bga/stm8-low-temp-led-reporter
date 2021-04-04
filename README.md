@@ -5,3 +5,5 @@ Extra features.
 - report sensor failure - 4 short blinks
 
 Requires IAR STM8 for build
+
+![Front view](https://github.com/bga/stm8-low-temp-led-reporter/raw/master/media/sch.png "Schematic")
