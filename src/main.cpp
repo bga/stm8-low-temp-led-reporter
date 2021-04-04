@@ -577,7 +577,7 @@ void AWU_init() {
 		//# TODO use only mul and shift. Try to use FU16 instead FU32
 		AWU_APR = (FU32(AWU_period_s) * AWU_freq_hz) / (30LU * (1 << 11));
 	}
-	setBit_noBV(AWU_CSR, _BV(AWU_CSR_AWUEN));
+	setBitMask(AWU_CSR, _BV(AWU_CSR_AWUEN));
 
 	//# disable internal ldo in active-halt mode
 	setBit(CLK_ICKR, CLK_ICKR_REGAH);
