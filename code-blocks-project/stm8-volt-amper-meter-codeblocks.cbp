@@ -28,7 +28,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="../lib/!mcu/UartProcessor_test.cpp" />
 		<Unit filename="../lib/stm8-bare-min/stm8s/lib/delay.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -37,22 +36,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../lib/stm8-bare-min/stm8s/lib/eeprom.h" />
-		<Unit filename="../lib/stm8-bare-min/stm8s/lib/i2c.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../lib/stm8-bare-min/stm8s/lib/i2c.h" />
-		<Unit filename="../lib/stm8-bare-min/stm8s/lib/spi.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../lib/stm8-bare-min/stm8s/lib/spi.h" />
 		<Unit filename="../lib/stm8-bare-min/stm8s/lib/stm8s.h" />
-		<Unit filename="../lib/stm8-bare-min/stm8s/lib/uart.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="../lib/stm8-bare-min/stm8s/lib/uart.h" />
-		<Unit filename="../src/FlatList.h" />
-		<Unit filename="../src/UI.h" />
-		<Unit filename="../src/_7SegmentsFont.h" />
 		<Unit filename="../src/main.cpp" />
 		<Extensions>
 			<code_completion>
