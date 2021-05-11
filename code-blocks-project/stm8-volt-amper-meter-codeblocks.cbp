@@ -29,27 +29,27 @@
 			<Add option="-Wall" />
 		</Compiler>
 		<Unit filename="../lib/!mcu/UartProcessor_test.cpp" />
-		<Unit filename="../lib/stm8-bare-min/stm8s/include/stm8-bare-min/delay.c">
+		<Unit filename="../lib/stm8-bare-min/stm8s/lib/delay.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../lib/stm8-bare-min/stm8s/include/stm8-bare-min/delay.h" />
-		<Unit filename="../lib/stm8-bare-min/stm8s/include/stm8-bare-min/eeprom.c">
+		<Unit filename="../lib/stm8-bare-min/stm8s/lib/delay.h" />
+		<Unit filename="../lib/stm8-bare-min/stm8s/lib/eeprom.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../lib/stm8-bare-min/stm8s/include/stm8-bare-min/eeprom.h" />
-		<Unit filename="../lib/stm8-bare-min/stm8s/include/stm8-bare-min/i2c.c">
+		<Unit filename="../lib/stm8-bare-min/stm8s/lib/eeprom.h" />
+		<Unit filename="../lib/stm8-bare-min/stm8s/lib/i2c.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../lib/stm8-bare-min/stm8s/include/stm8-bare-min/i2c.h" />
-		<Unit filename="../lib/stm8-bare-min/stm8s/include/stm8-bare-min/spi.c">
+		<Unit filename="../lib/stm8-bare-min/stm8s/lib/i2c.h" />
+		<Unit filename="../lib/stm8-bare-min/stm8s/lib/spi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../lib/stm8-bare-min/stm8s/include/stm8-bare-min/spi.h" />
-		<Unit filename="../lib/stm8-bare-min/stm8s/include/stm8-bare-min/stm8s.h" />
-		<Unit filename="../lib/stm8-bare-min/stm8s/include/stm8-bare-min/uart.c">
+		<Unit filename="../lib/stm8-bare-min/stm8s/lib/spi.h" />
+		<Unit filename="../lib/stm8-bare-min/stm8s/lib/stm8s.h" />
+		<Unit filename="../lib/stm8-bare-min/stm8s/lib/uart.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../lib/stm8-bare-min/stm8s/include/stm8-bare-min/uart.h" />
+		<Unit filename="../lib/stm8-bare-min/stm8s/lib/uart.h" />
 		<Unit filename="../src/FlatList.h" />
 		<Unit filename="../src/UI.h" />
 		<Unit filename="../src/_7SegmentsFont.h" />
@@ -57,7 +57,7 @@
 		<Extensions>
 			<code_completion>
 				<search_path add="../lib/!cpp/include" />
-				<search_path add="../lib/stm8-bare-min/stm8s/include/stm8-bare-min" />
+				<search_path add="../lib/stm8-bare-min/stm8s/lib" />
 				<search_path add="../lib/!mcu/include" />
 			</code_completion>
 			<envvars />
