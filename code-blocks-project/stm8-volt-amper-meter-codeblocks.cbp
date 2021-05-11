@@ -56,6 +56,7 @@
 		<Unit filename="../src/main.cpp" />
 		<Extensions>
 			<code_completion>
+				<search_path add="../lib/!cpp/include" />
 				<search_path add="../lib/stm8-bare-min/stm8s/include/stm8-bare-min" />
 				<search_path add="../lib/!mcu/include" />
 			</code_completion>
