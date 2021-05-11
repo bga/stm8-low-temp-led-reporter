@@ -256,9 +256,9 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>$_STM8_BARE_MIN_LIB_$\stm8s\lib</state>
-                    <state>E:\p\!electronics\!mcu\include</state>
-                    <state>E:\p\!cpp\include</state>
+                    <state>$PROJ_DIR$\..\lib\stm8-bare-min\stm8s\lib</state>
+                    <state>$PROJ_DIR$\..\lib\!mcu\include</state>
+                    <state>$PROJ_DIR$\..\lib\!cpp\include</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1059,9 +1059,9 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
-                    <state>E:\p\!electronics\!stm8\stm8-bare-min\stm8s\lib</state>
-                    <state>E:\p\!electronics\!mcu\include</state>
-                    <state>E:\p\!cpp\include</state>
+                    <state>$PROJ_DIR$\..\lib\stm8-bare-min\stm8s\lib</state>
+                    <state>$PROJ_DIR$\..\lib\!mcu\include</state>
+                    <state>$PROJ_DIR$\..\lib\!cpp\include</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -1616,19 +1616,19 @@
     <group>
         <name>stm8s-bare-min</name>
         <file>
-            <name>$_STM8_BARE_MIN_LIB_$\stm8s\lib\delay.h</name>
+            <name>$PROJ_DIR$\..\lib\stm8-bare-min\stm8s\lib\delay.h</name>
         </file>
         <file>
-            <name>$_STM8_BARE_MIN_LIB_$\stm8s\lib\delay.c</name>
+            <name>$PROJ_DIR$\..\lib\stm8-bare-min\stm8s\lib\delay.c</name>
         </file>
         <file>
-            <name>$_STM8_BARE_MIN_LIB_$\stm8s\lib\stm8-bare-min\eeprom.h</name>
+            <name>$PROJ_DIR$\..\lib\stm8-bare-min\stm8s\lib\stm8-bare-min\eeprom.h</name>
         </file>
         <file>
-            <name>$_STM8_BARE_MIN_LIB_$\stm8s\lib\eeprom.c</name>
+            <name>$PROJ_DIR$\..\lib\stm8-bare-min\stm8s\lib\eeprom.c</name>
         </file>
         <file>
-            <name>$_STM8_BARE_MIN_LIB_$\stm8s\lib\stm8s.h</name>
+            <name>$PROJ_DIR$\..\lib\stm8-bare-min\stm8s\lib\stm8s.h</name>
         </file>
     </group>
 </project>
