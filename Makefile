@@ -1,3 +1,18 @@
+# Copyright 2020 Bga <bga.email@gmail.com>
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#   http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
 export PATH := $(PATH):$(HOME)/local/sdcc/bin
 
 MCU  = stm8s003f3
@@ -23,10 +38,10 @@ $(TARGET): $(SRCS)
 	IarBuild.bat iar-stm8-project/stm8-volt-amper-meter-iar.ewp $(PROFILE)
 
 $(TARGET)-flash.bin: $(TARGET)
-	iar-stm8_dump-flash.sh $(TARGET)
+	tools/iar-stm8_dump-flash.sh $(TARGET)
 
 $(TARGET)-eeprom.bin: $(TARGET)
-	iar-stm8_dump-eeprom.sh $(TARGET)
+	tools/iar-stm8_dump-eeprom.sh $(TARGET)
 
 size: $(TARGET)-flash.bin
 	@echo "----------"
